@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Data Bind</title>
+</head>
+<body>
+    <div id="app">
+        
+        <h1>{{ title }}</h1>
+
+        <p>{{ content }}</p>
+
+        <p>{{ isActive ? 'Ativo' : 'Não Ativo' }}</p>
+
+        <a :href="url" :title="textUrl">{{textUrl}}</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    new Vue({
+        el: '#app',
+        data: {
+            title: 'Meu Título',
+            content: 'Aprendendo VueJs',
+            isActive: true,
+            url: 'https:google.com',
+            textUrl: 'Google',
+        }
+    })
+    </script>
+</body>
+</html>
