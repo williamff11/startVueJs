@@ -5,14 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Events Keyboard in VueJs</title>
+    <title>Key Modifiers</title>
 </head>
 
 <body>
     <div id="app">
-        <input type="text" @keyup.8="changeValue" @keyup.up.down="changeValueTwo" @keyup="getCodeKey">
 
-        {{ valueText }}
+        <div @click.ctrl.63="testeEvent">
+            Clique Aqui!!
+        </div>
+
+        <input type="text" @keyup.enter="messageForPaste">
+
     </div>
 
 
@@ -21,17 +25,14 @@
         new Vue({
             el: '#app',
             data: {
-                valueText: ''
+
             },
             methods: {
-                changeValue (event) {
-                    this.valueText = event.target.value
+                testeEvent() { 
+                    alert('Testing')
                 },
-                changeValueTwo (event) {
-                    alert('success')
-                },
-                getCodeKey (event) {
-                    console.log(event.keyCode)
+                messageForPaste(event) {
+                    alert(event.keyCode)
                 },
             }
         });

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello Word</title>
+
+    <style>
+        .active{background: green;}
+        .no-active{background: red;}
+        .default{color: yellow;}
+        .default2{color: blueviolet;}
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="isActive = !isActive">TROCA</button>
+        <div :class="{active : isActive}">
+            Exemplo Style Vue
+        </div>
+
+        <div :class="isActive ? 'active' : 'no-active'">
+            Exemplo Two Style Vue
+        </div>
+
+        <div class="default" :class="isActive ? 'active' : 'no-active'">
+            Exemplo Three Style Vue
+        </div>
+
+        <div :class="['default2', isActive ? 'active' : 'no-active']">
+            Exemplo Three/two Style Vue
+        </div>
+
+        <div :class="classObject">
+            Exemplo Four Style Vue
+        </div>
+
+        <div :style="{display: ['-webkit-flex', '-moz-flex', 'flex']}">
+            Exemplo five Style Vue
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                classObject: {
+                    active: true,
+                    'text-red': false,
+                    'color-white': false
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

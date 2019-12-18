@@ -5,15 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Events Keyboard in VueJs</title>
+    <title>v-on</title>
 </head>
 
 <body>
     <div id="app">
-        <input type="text" @keyup.8="changeValue" @keyup.up.down="changeValueTwo" @keyup="getCodeKey">
+        <div>
+            <button v-on:click="addOne">Adiciona 1</button>
+            <p>Quantas vezes o botão acima foi clicado: {{ counter }}</p>
+        </div>
+        <hr>
+        <button v-on:click="say('oi')">Diga oi</button>
+        <button v-on:click="say('tchau')">Diga tchau</button>
 
-        {{ valueText }}
     </div>
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -21,17 +28,15 @@
         new Vue({
             el: '#app',
             data: {
-                valueText: ''
+                counter: 0,
             },
             methods: {
-                changeValue (event) {
-                    this.valueText = event.target.value
+                addOne() {
+                    this.counter += 3
                 },
-                changeValueTwo (event) {
-                    alert('success')
-                },
-                getCodeKey (event) {
-                    console.log(event.keyCode)
+
+                say(message) {
+                    alert(message)
                 },
             }
         });

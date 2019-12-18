@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Watch</title>
+</head>
+
+<body>
+    <div id="app">
+
+
+        <button @click="addMoreOne">More One</button>
+
+        <input type="text" v-model="count">
+
+        <p>{{count}}</p>
+
+        <p>{{now}}</p>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                count: 0,
+            },
+            methods: {
+                addMoreOne() {
+                    this.count ++
+                }
+            },
+            watch:{
+                count: function (value) {
+                    var vm = this
+
+                    setTimeout(function(){
+                        vm.count = 0
+                    } ,3000)
+                }
+            },
+            computed: {
+                now: function () {
+                    return Date.now()
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
