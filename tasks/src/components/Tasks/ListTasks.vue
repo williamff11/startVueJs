@@ -2,11 +2,20 @@
   <div>
     <h2>{{title}}</h2>
 
-    <form class="form form-inline" @submit.prevent="save()">
-      <input type="text" placeholder="Nome Tarefa" class="form-control" v-model="task.name" />
-      <button type="submit" class="btn btn-success">Enviar</button>
-    </form>
-
+    <div class="row">
+      <div class="col">
+        <form class="form form-inline">
+          <input type="text" placeholder="Search" class="form-control" v-model="filter" />
+        </form>
+      </div>
+      <div class="col">
+        <form class="form form-inline" @submit.prevent="onSubmit()">
+          <input type="text" placeholder="Nome Tarefa" class="form-control" v-model="task.name" />
+          <button type="submit" class="btn btn-success">Enviar</button>
+        </form>
+      </div>
+    </div>
+    {{filter}}
     <table class="table table-dark">
       <thead>
         <tr>
@@ -16,12 +25,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(task, index) in tasks" :key="index">
+        <tr v-for="(task, index) in filteredItems" :key="index">
           <td>{{task.id}}</td>
           <td>{{task.name}}</td>
           <td>
-            <a href class="btn btn-info">Editar</a>
-            <a href class="btn btn-danger">Deletar</a>
+            <a href="#" @click.prevent="edit(task.id)" class="btn btn-info">Editar</a>
+            <a href="#" @click.prevent="deleted(task.id)" class="btn btn-danger">Deletar</a>
           </td>
         </tr>
       </tbody>
@@ -38,18 +47,73 @@ export default {
       task: {
         id: "",
         name: ""
-      }
+      },
+      updating: false,
+      updatedIndex: "",
+      filter: ""
     };
   },
   methods: {
+    onSubmit() {
+      if (this.updating) {
+        this.update();
+
+        return;
+      }
+      this.save();
+    },
     save() {
       this.task.id = this.tasks.length + 1;
-      this.tasks.push(this.task);
+      this.tasks.push(this.task)
 
+      this.clearForm()
+    },
+    edit(id) {
+      this.updatedIndex = this.findIndexItem(id)
+
+      this.task = this.tasks[this.updatedIndex]
+
+      this.updating = true
+    },
+    update() {
+      this.tasks[this.updatedIndex] = this.task
+
+      this.updating = false
+
+      this.clearForm()
+    },
+    clearForm() {
       this.task = {
         id: "",
         name: ""
       };
+    },
+    deleted(id) {
+      this.tasks.splice(this.findIndexItem(id), 1);
+    },
+    findIndexItem (id) {
+      for (let index = 0; index < this.tasks.length; index++) {
+        if(this.tasks[index].id == id)
+        return index
+      }
+    }
+  },
+  computed: {
+    filteredItems() {
+      if (this.filter === "") return this.tasks;
+
+      let vm = this;
+      /*
+      return this.tasks.filter(task => {
+        return task.name.indexOf(vm.filter) > -1;
+      })*/
+      /*
+      return this.tasks.filter(task => {
+        return task.name.toLowerCase().indexOf(vm.filter.toLowerCase()) > -1;
+      })*/
+      return this.tasks.filter(task => {
+        return task['name'].includes(vm.filter)
+      });
     }
   }
 };
